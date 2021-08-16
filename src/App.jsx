@@ -11,7 +11,7 @@ import {useState} from 'react';
 
 
 function App() {
-  const[menuOpen,setMenuOpen] = useState(false);
+  const[menuOpen,setMenuOpen] = useState(true);
   return (
     <div className="app">
       <Topbar menuOpen = {menuOpen} setMenuOpen={setMenuOpen}/>
