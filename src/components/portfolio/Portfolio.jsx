@@ -1,36 +1,58 @@
-import './portfolio.scss';
+import { useEffect, useState } from 'react';
+import PortfolioList from '../portfolioList/PortfolioList';
+import "./portfolio.scss";
+import {
+featuredPortfolio,
+webPortfolio,
+} from "../../data"
 
-function Portfolio() {
+export default function Portfolio() {
+    const [selected, setSelected] = useState("featured")
+    const [data, setDdata] = useState([])
+    const list = [
+        {
+          id: "featured",
+          title: "Featured",
+        },
+        {
+          id: "web",
+          title: "Web App",
+        },
+        
+      ];
+
+      useEffect(()=>{
+
+        switch(selected){
+            case "web":
+                setDdata(webPortfolio);
+                break;    
+            case "featured":
+                setDdata(featuredPortfolio);
+                break;
+            default:
+                setDdata(featuredPortfolio);
+        }   
+
+      }, [selected])
+
     return (
-        <div className="portfolio" id="portfolio">
+        <div className="portfolio" id="portfolio"> 
             <h1>Portfolio</h1>
             <ul>
-                <li className="active">Featured</li>
-                <li>Web App</li>
-                <li>Design</li>
-                
+               {list.map(item=>(
+                   <PortfolioList title={item.title} active={selected === item.id} setSelected={setSelected} id={item.id}/>
+               ))}
             </ul>
             <div className="container">
+                {data.map(d=>(
+
                 <div className="item">
-                    <img src="" alt="" />
-                    <h3>Popular Tour Places</h3>
+                    <img src={d.img} alt="" />
+                    <h3>Tour Places</h3>
                 </div>
-                <div className="item">
-                    <img src="" alt="" />
-                    <h3>Popular Tour Places</h3>
-                </div>
-                <div className="item">
-                    <img src="" alt="" />
-                    <h3>Popular Tour Places</h3>
-                </div>
-                <div className="item">
-                    <img src="" alt="" />
-                    <h3>Popular Tour Places</h3>
-                </div>
+                ))}
             </div>
-            
         </div>
     )
 }
-
-export default Portfolio;
